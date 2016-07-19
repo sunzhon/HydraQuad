@@ -89,7 +89,11 @@ void * can_recive_pthread(void *arg) {
 		can_recive(&p->FdSet);
 
 		pthread_mutex_lock(&mutex_cond_send);
+<<<<<<< HEAD
 		if (p->FdSet.fflag[12] == 1) {//检测是否收到Leg_HZ发送的数据
+=======
+		if (p->FdSet.fflag[12] == 1) {
+>>>>>>> fc40bdd488119f8727ed723386e56768e294e79c
 			send_condition = 1;
 			pthread_cond_signal(&cond_send);
 		}
