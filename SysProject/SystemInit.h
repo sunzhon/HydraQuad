@@ -25,7 +25,7 @@
 
 #define MAX 100
 
-#define TIMESAMPLE 30000 //5,000是最小的usleep时间，也就是最大的通讯速率，四核下位机CAN2上传的数据速率：399帧每秒，PC机CAN调试器接受延迟15秒，
+#define TIMESAMPLE 40000 //5,000是最小的usleep时间，也就是最大的通讯速率，四核下位机CAN2上传的数据速率：399帧每秒，PC机CAN调试器接受延迟15秒，
 //当usleep 时间为20，000时，是最小的无延迟通讯休眠时间。
 
 
@@ -44,7 +44,6 @@ pthread_t GAIT_DATA_thread,FD_MANA_thread;
 pthread_mutex_t mutex_cond_send;
 
 pthread_cond_t cond_send;
-int send_condition;
 
 
 //同步信号量

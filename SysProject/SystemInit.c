@@ -22,7 +22,6 @@ void * gait_data_pthread(void *arg) {
 				perror("sem_wait sem_sen:!\n");
 				exit(1);
 			}
-
 			for (j = 0; j < 12; j++)
 				data[j] = hopedata[j + 11 * i];
 
@@ -54,27 +53,19 @@ void * can_send_pthread(void *arg) {
 				perror("sem_wait sem_sen:!\n");
 				exit(1);
 			}
-			//收发条件同步
-			pthread_mutex_lock(&mutex_cond_send);
-			while (send_condition == 0)
+			pthread_mutex_lock(&mutex_cond_send);//收发条件同步
+			while (p->FdSet.fflag[12] == 0)
 				pthread_cond_wait(&cond_send, &mutex_cond_send);
-			send_condition = 0;
-			pthread_mutex_unlock(&mutex_cond_send);
-
-			/**该部分属于数据加载部分，决定上位机发送那些数据，这部分由新的另外的线程事实决定**/
-			//			for(j=0;j<12;j++)
-			//			data[j]=hopedata[j+11*i];
-			//			GaitDataLtransform(data,dadata);
-			//			for(j=0;j<12;j++)
-			//			p->FdSet.data1[j]=dadata[j];
 			can_send(&p->FdSet);
+			p->FdSet.fflag[12] = 0;
+			printf("I am here se\n");
 			usleep(TIMESAMPLE);
+			pthread_mutex_unlock(&mutex_cond_send);
 			status = sem_post(&p->sem_A);
 			if (status != 0) {
 				perror("sem_wait sem_sen:!\n");
 				exit(1);
 			}
-
 		}
 	}
 	pthread_exit((void *) 2);
@@ -85,19 +76,12 @@ void * can_recive_pthread(void *arg) {
 
 	printf("receive pthread\n");
 	while (1) {
-
-		can_recive(&p->FdSet);
-
-		pthread_mutex_lock(&mutex_cond_send);
-<<<<<<< HEAD
+		can_recive(&p->FdSet);//此处切勿将收数据加锁，也不能和发数据同步锁，如此一来条件锁会把所有线程挂起。
 		if (p->FdSet.fflag[12] == 1) {//检测是否收到Leg_HZ发送的数据
-=======
-		if (p->FdSet.fflag[12] == 1) {
->>>>>>> fc40bdd488119f8727ed723386e56768e294e79c
-			send_condition = 1;
+			printf("I am here re\n");
 			pthread_cond_signal(&cond_send);
 		}
-		pthread_mutex_unlock(&mutex_cond_send);
+
 	}
 	pthread_exit((void *) 1);
 }
@@ -127,7 +111,7 @@ void *feddata_manage_pthread(void *arg) {
 						* (p->FdSet.data2[i] - p->FdSet.fflag[i]);
 				p->FdSet.fflag[i] = p->FdSet.data2[i];
 			}
-			if ((sum < 1000)&&(sum>0))
+			if ((sum < 1000) && (sum > 0))
 				zeros = 100 + zeros;
 			switch (zeros) {
 			case 100:
@@ -214,7 +198,6 @@ int task_init(ARG *arg) {
 	int status;
 	p = arg;
 	//发送条件
-	send_condition = 0;
 	pthread_cond_init(&cond_send, NULL );
 	pthread_mutex_init(&mutex_cond_send, NULL);
 

@@ -26,13 +26,13 @@ int can_send(CanFdSet_t *FdSet) {
 		WR[k].length = 8;
 		switch (k) {
 		case 0:
-			WR[k].id = 0x10;
+			WR[k].id = Joint1;
 			break;
 		case 1:
-			WR[k].id = 0x11;
+			WR[k].id = Joint2;
 			break;
 		case 2:
-			WR[k].id = 0x12;
+			WR[k].id = Joint3;
 			break;
 		default:
 			break;
