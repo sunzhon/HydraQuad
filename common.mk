@@ -11,7 +11,7 @@ include $(QCONFIG)
 USEFILE=
 
 #===== LDFLAGS - add the flags to the linker command line.
-LDFLAGS+=-Wl,-E -M
+LDFLAGS+=-Wl,-E -M -lm
 
 #===== EXTRA_SRCVPATH - a space-separated list of directories to search for source files.
 EXTRA_SRCVPATH+=$(PROJECT_ROOT)/SysProject  \
@@ -19,10 +19,18 @@ EXTRA_SRCVPATH+=$(PROJECT_ROOT)/SysProject  \
 	$(PROJECT_ROOT)/DeviceLibrary/FileDevice  \
 	$(PROJECT_ROOT)/DataProcess/JointData  \
 	$(PROJECT_ROOT)/Algorithm/JointAlgo  \
-	$(PROJECT_ROOT)/DataProcess/ADCalibrate
+	$(PROJECT_ROOT)/DataProcess/ADCalibrate \
+	$(PROJECT_ROOT)/DeviceLibrary/RSDevice
+	
 
 #===== EXTRA_INCVPATH - a space-separated list of directories to search for include files.
 EXTRA_INCVPATH+=$(PROJECT_ROOT)
+
+#===== CCFLAGS - add the flags to the C compiler command line. 
+CCFLAGS+=-lm
+
+#===== LIBS - a space-separated list of library items to be included in the link.
+LIBS+=c socket
 
 include $(MKFILES_ROOT)/qmacros.mk
 ifndef QNX_INTERNAL

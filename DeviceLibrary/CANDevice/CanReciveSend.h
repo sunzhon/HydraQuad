@@ -37,15 +37,14 @@
 
 
 typedef struct {
-	int rfd;
-	int wfd;
-	fd_set rfds;
-	fd_set wfds;
+	int wrfd;
+	fd_set wrfds;
 	int buadrate;
 	int newcode;
 	int newmask;
-	int data1[12];
-	int data2[12];
+	unsigned int data1[12];
+	unsigned int data2[12];
+	unsigned int data3[12];
 	int fflag[13];//表示传感器的状态，1是上极限，-1 是下极限；0表示中位
 }CanFdSet_t;
 

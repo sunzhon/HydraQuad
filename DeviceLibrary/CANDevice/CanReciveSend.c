@@ -11,6 +11,9 @@ int can_send(CanFdSet_t *FdSet) {
 
 	int k;
 	CanFdSet_t *p;
+	struct timeval tv;
+	tv.tv_sec=1;
+	tv.tv_usec=0;
 	p = FdSet;
 	canmsg_t WR[3];//三个关节+加一个结束位，一个控制指令
 	for (k = 0; k < 3; k++) {
@@ -26,23 +29,23 @@ int can_send(CanFdSet_t *FdSet) {
 		WR[k].length = 8;
 		switch (k) {
 		case 0:
-			WR[k].id = Joint1;
+			WR[k].id = p->fflag[0];
 			break;
 		case 1:
-			WR[k].id = Joint2;
+			WR[k].id = p->fflag[1];
 			break;
 		case 2:
-			WR[k].id = Joint3;
+			WR[k].id = p->fflag[2];
 			break;
 		default:
 			break;
 		}
 
-		FD_ZERO(&p->wfds);
-		FD_SET(p->wfd,&p->wfds);
-		if (select(p->wfd + 1, 0, &p->wfds, NULL, NULL) > NULL) {
-			if (FD_ISSET(p->wfd, &p->wfds) > 0) {
-				write(p->wfd, &WR[k], sizeof(WR[k]));
+		FD_ZERO(&p->wrfds);
+		FD_SET(p->wrfd,&p->wrfds);
+		if (select(p->wrfd + 1, 0, &p->wrfds, NULL, NULL) > NULL) {//允许阻塞
+			if (FD_ISSET(p->wrfd, &p->wrfds) > 0) {
+				write(p->wrfd, &WR[k], sizeof(WR[k]));
 			} else
 				perror("write wfd error:\n");
 		} else
@@ -58,12 +61,15 @@ int can_recive(CanFdSet_t *FdSet) {
 	unsigned int got;
 	unsigned int readcount;
 	unsigned int i;
+	struct timeval tv;
+	tv.tv_sec=1;
+	tv.tv_usec=0;
 	p = FdSet;
-	FD_ZERO(&p->wfds);
-	FD_SET(p->wfd, &p->wfds);
-	if (select(p->wfd + 1, &(p->wfds), 0, NULL, NULL) > 0) {
-		if (FD_ISSET(p->wfd, &p->wfds)) {
-			got = read(p->wfd, RD, 5 * sizeof(canmsg_t));
+	FD_ZERO(&p->wrfds);
+	FD_SET(p->wrfd, &p->wrfds);
+	if (select(p->wrfd + 1, &(p->wrfds), 0, NULL, NULL) > 0) {//允许阻塞
+		if (FD_ISSET(p->wrfd, &p->wrfds)) {
+			got = read(p->wrfd, RD, 5 * sizeof(canmsg_t));
 			if (got > 0) {
 				readcount = got / 30;
 				for (i = 0; i < min(readcount,4); i++) {
@@ -97,13 +103,13 @@ int can_recive(CanFdSet_t *FdSet) {
 					}
 				}
 			} else {
-				perror("read error:\n");
+				perror("can recive error:\n");
 			}
 		} else {
 			perror("ISSET  error:\n");
 		}
 	} else {
-		perror("select  error:\n");
+		perror("recive select  error:\n");
 	}
 	return NULL;
 }
@@ -114,30 +120,33 @@ int can_init(int canport, CanFdSet_t *FdSet) {
 	p = FdSet;
 	switch (canport) {
 	case CAN0:
+
 		p->newcode = 0x20;//CAN1 只接受0x20,0x21,...
 		p->newmask = 0x7fffff;
-		p->buadrate = 500;
-		if ((p->wfd = open(WR_PORT, O_RDWR)) < 0) {
+		p->buadrate = 1000;
+		if ((p->wrfd = open(WR_PORT, O_RDWR)) < 0) {
 			perror("open can0 error");
 			exit(errno);
 		}
-		printf("fd_wt is %d\n", p->wfd);
-		set_bitrate(p->wfd, p->buadrate);
+		printf("wrfd is %d\n", p->wrfd);
+		set_bitrate(p->wrfd, p->buadrate);
 		newcode = (p->newcode << 21) + (0 < 20);
-		set_accmask((p->wfd), newcode, (p->newmask));
+		set_accmask((p->wrfd), newcode, (p->newmask));
 		break;
 	case CAN1:
-		p->newcode = 0x30;//CAN2 只接受0x30,0x31,...
+
+		p->newcode = 0x20;//CAN2 只接受0x30,0x31,...
 		p->newmask = 0x7fffff;
-		p->buadrate = 500;
-		if ((p->rfd = open(RD_PORT, O_RDWR)) < 0) {
-			perror("open read port error\n");
+		p->buadrate = 1000;
+
+		if ((p->wrfd = open(RD_PORT, O_RDWR)) < 0) {
+			perror("open can1 error\n");
 			exit(errno);
 		}
-		printf("fd_rd is %d\n", p->rfd);
-		set_bitrate(p->rfd, p->buadrate);
+		printf("wrfd is %d\n", p->wrfd);
+		set_bitrate(p->wrfd, p->buadrate);
 		newcode = (p->newcode << 21) + (0 < 20);
-		set_accmask((p->rfd), newcode, (p->newmask));
+		set_accmask((p->wrfd), newcode, (p->newmask));
 		break;
 	}
 
@@ -147,7 +156,6 @@ int can_init(int canport, CanFdSet_t *FdSet) {
 int can_end(CanFdSet_t *FdSet) {
 	CanFdSet_t *p;
 	p = FdSet;
-	close(p->rfd);
-	close(p->wfd);
+	close(p->wrfd);
 	return NULL;
 }

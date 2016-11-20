@@ -8,38 +8,58 @@
 #include "DataProcess/ADCalibrate/ad_motion.h"
 int ad_limit(unsigned int ad_up[], unsigned int ad_down[]) {
 	int i;
+	FILE *fin;
+	/*
 	for (i = 0; i < 12; i++) {
 		UPLIMIT[2][i] = ad_up[i];
 		DOWNLIMIT[2][i] = ad_down[i];
 	}
 	if (AD_MOTION) {
-		UPLIMIT[2][0] = 529;
-		UPLIMIT[2][1] = 509;
-		UPLIMIT[2][2] = 493;
+		////伸极限
+		UPLIMIT[2][0] = 600;
+		UPLIMIT[2][1] = 529;
+		UPLIMIT[2][2] = 475;
+
 		UPLIMIT[2][3] = 530;
-		UPLIMIT[2][4] = 475;
-		UPLIMIT[2][5] = 524;
-		UPLIMIT[2][6] = 638;
-		UPLIMIT[2][7] = 561;
-		UPLIMIT[2][8] = 589;
-		UPLIMIT[2][9] = 822;
-		UPLIMIT[2][10] = 561;
-		UPLIMIT[2][11] = 600;
+		UPLIMIT[2][4] = 716;
+		UPLIMIT[2][5] = 780;
 
-		DOWNLIMIT[2][0] = 373;
-		DOWNLIMIT[2][1] = 298;
-		DOWNLIMIT[2][2] = 274;
+		UPLIMIT[2][6] = 643;
+		UPLIMIT[2][7] = 556;
+		UPLIMIT[2][8] = 611;
+
+		UPLIMIT[2][9] = 561;
+		UPLIMIT[2][10] = 538;
+		UPLIMIT[2][11] = 538;
+
+/////缩极限
+		DOWNLIMIT[2][0] = 425;
+		DOWNLIMIT[2][1] = 294;
+		DOWNLIMIT[2][2] = 296;
+
 		DOWNLIMIT[2][3] = 351;
-		DOWNLIMIT[2][4] = 280;
-		DOWNLIMIT[2][5] = 274;
-		DOWNLIMIT[2][6] = 507;
-		DOWNLIMIT[2][7] = 325;
-		DOWNLIMIT[2][8] = 340;
-		DOWNLIMIT[2][9] = 695;
-		DOWNLIMIT[2][10] = 325;
-		DOWNLIMIT[2][11] = 340;
-	}
+		DOWNLIMIT[2][4] = 436;
+		DOWNLIMIT[2][5] = 417;
 
+		DOWNLIMIT[2][6] = 509;
+		DOWNLIMIT[2][7] = 331;
+		DOWNLIMIT[2][8] = 365;
+
+		DOWNLIMIT[2][9] = 400;
+		DOWNLIMIT[2][10] = 310;
+		DOWNLIMIT[2][11] = 286;
+	}
+*/
+
+
+fin = fopen(SENSOR_ZONE, "r"); // 打开文件按读方式打开
+for (i = 0; i < NUM_JOINTS_ZONE; i++)
+	fscanf(fin, "%d %d", &DOWNLIMIT[2][i],&UPLIMIT[2][i]); // 循环读
+fclose(fin); //关闭文件
+/*
+for(i=0;i<12;i++)
+printf("down %d :%d,up %d :%d\n",i,DOWNLIMIT[2][i],i,UPLIMIT[2][i]);
+*/
 	return NULL;
 }
 

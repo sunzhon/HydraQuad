@@ -23,8 +23,8 @@
 //当一个数据或结构体变量在多个函数之间传递时，使用全局变量。或变量在函数之间调用的时空关系不确定时，使用全局变量
 
 
-int FedDataSave(FILE *fp[], int AD[], int DA[]);
-int GaitDataLtransform(float * Value_HOPE, int *DA_HOPE);
+int FedDataSave(FILE *fp[],unsigned  int hope[],unsigned int feed[],unsigned int control[]);
+int GaitDataLtransform(float * Value_HOPE, unsigned int *DA_HOPE);
 int GaitDataLoad(float hopeData[],int count);
 
 #endif /* GAITDATA_H_ */

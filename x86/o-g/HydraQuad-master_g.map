@@ -2,19 +2,37 @@
 Allocating common symbols
 Common symbol       size              file
 
-cond_send           0x8               HydraQuad.o
-fp                  0x10              HydraQuad.o
-hopedata            0x12c0            HydraQuad.o
-mutex_cond_send     0x8               HydraQuad.o
-UPLIMIT             0x90              GaitData.o
+force_buffer        0x80              HydraQuad.o
+UPLIMIT             0x90              ForceAcq.o
+joint_buffer        0x80              HydraQuad.o
+imu_buffer          0x80              HydraQuad.o
 motion_curb_pid     0x4               HydraQuad.o
-CAN_RD_thread       0x4               HydraQuad.o
-DOWNLIMIT           0x90              GaitData.o
-CAL_AD_thread       0x4               HydraQuad.o
-AD_calibrate_pid    0x4               HydraQuad.o
-FD_MANA_thread      0x4               HydraQuad.o
+TP_thread           0x4               HydraQuad.o
+signal_count3       0x4               IMUAcq.o
 GAIT_DATA_thread    0x4               HydraQuad.o
+motion_planning_pid
+                    0x4               HydraQuad.o
+cond_send           0x8               ForceAcq.o
+MP_thread           0x4               HydraQuad.o
+FORCE_GET_thread    0x4               ForceAcq.o
 CAN_WR_thread       0x4               HydraQuad.o
+IMU_acq_thread      0x4               HydraQuad.o
+FORCE_RE_thread     0x4               ForceAcq.o
+CAL_AD_thread       0x4               HydraQuad.o
+force_acquisition_pid
+                    0x4               HydraQuad.o
+fp                  0x10              MotionCurb.o
+FD_MANA_thread      0x4               HydraQuad.o
+FORCE_SD_thread     0x4               ForceAcq.o
+IMU_FD_thread       0x4               HydraQuad.o
+IMU_snd_thread      0x4               HydraQuad.o
+imu_acquisition_pid
+                    0x4               HydraQuad.o
+mutex_cond_send     0x8               ForceAcq.o
+CAN_RD_thread       0x4               HydraQuad.o
+hopedata            0x12c0            MotionCurb.o
+DOWNLIMIT           0x90              ForceAcq.o
+FORCE_FD_thread     0x4               ForceAcq.o
 
 Memory Configuration
 
@@ -27,14 +45,21 @@ TARGET(elf32-i386)
 LOAD D:/QNX650/target/qnx6/x86/lib/crt1.o
 LOAD D:/QNX650/target/qnx6/x86/lib/crti.o
 LOAD D:/QNX650/host/win32/x86/usr/lib/gcc/i486-pc-nto-qnx6.5.0/4.4.2/crtbegin.o
+LOAD D:/QNX650/target/qnx6/x86/lib/libm.so
 LOAD CanConfigure.o
 LOAD CanReciveSend.o
+LOAD ForceAcq.o
 LOAD GaitData.o
 LOAD HydraQuad.o
+LOAD IMUAcq.o
 LOAD JointControler.o
 LOAD JointDataFile.o
-LOAD SystemInit.o
+LOAD MotionCurb.o
+LOAD MotionPlanning.o
 LOAD ad_motion.o
+LOAD rs485.o
+LOAD D:/QNX650/target/qnx6/x86/lib/libc.so
+LOAD D:/QNX650/target/qnx6/x86/lib/libsocket.so
 LOAD D:/QNX650/host/win32/x86/usr/lib/gcc/i486-pc-nto-qnx6.5.0/4.4.2/libgcc.a
 LOAD D:/QNX650/target/qnx6/x86/lib/libc.so
 LOAD D:/QNX650/target/qnx6/x86/lib\libc.a
@@ -54,36 +79,36 @@ LOAD D:/QNX650/target/qnx6/x86/lib/crtn.o
 .note.gnu.build-id
  *(.note.gnu.build-id)
 
-.hash           0x08048120      0x280
+.hash           0x08048120      0x46c
  *(.hash)
- .hash          0x08048120      0x280 D:/QNX650/target/qnx6/x86/lib/crt1.o
+ .hash          0x08048120      0x46c D:/QNX650/target/qnx6/x86/lib/crt1.o
 
 .gnu.hash
  *(.gnu.hash)
 
-.dynsym         0x080483a0      0x5b0
+.dynsym         0x0804858c      0x960
  *(.dynsym)
- .dynsym        0x080483a0      0x5b0 D:/QNX650/target/qnx6/x86/lib/crt1.o
+ .dynsym        0x0804858c      0x960 D:/QNX650/target/qnx6/x86/lib/crt1.o
 
-.dynstr         0x08048950      0x3f3
+.dynstr         0x08048eec      0x6bc
  *(.dynstr)
- .dynstr        0x08048950      0x3f3 D:/QNX650/target/qnx6/x86/lib/crt1.o
+ .dynstr        0x08048eec      0x6bc D:/QNX650/target/qnx6/x86/lib/crt1.o
 
-.gnu.version    0x08048d44        0x0 load address 0x08048d43
+.gnu.version    0x080495a8        0x0
  *(.gnu.version)
  .gnu.version   0x00000000        0x0 D:/QNX650/target/qnx6/x86/lib/crt1.o
 
-.gnu.version_d  0x08048d44        0x0 load address 0x08048d43
+.gnu.version_d  0x080495a8        0x0
  *(.gnu.version_d)
  .gnu.version_d
                 0x00000000        0x0 D:/QNX650/target/qnx6/x86/lib/crt1.o
 
-.gnu.version_r  0x08048d44        0x0 load address 0x08048d43
+.gnu.version_r  0x080495a8        0x0
  *(.gnu.version_r)
  .gnu.version_r
                 0x00000000        0x0 D:/QNX650/target/qnx6/x86/lib/crt1.o
 
-.rel.dyn        0x08048d44       0x28
+.rel.dyn        0x080495a8       0x28
  *(.rel.init)
  *(.rel.text .rel.text.* .rel.gnu.linkonce.t.*)
  .rel.text      0x00000000        0x0 D:/QNX650/target/qnx6/x86/lib/crt1.o
@@ -96,13 +121,13 @@ LOAD D:/QNX650/target/qnx6/x86/lib/crtn.o
  *(.rel.ctors)
  *(.rel.dtors)
  *(.rel.got)
- .rel.got       0x08048d44       0x20 D:/QNX650/target/qnx6/x86/lib/crt1.o
+ .rel.got       0x080495a8       0x20 D:/QNX650/target/qnx6/x86/lib/crt1.o
  *(.rel.sdata .rel.sdata.* .rel.gnu.linkonce.s.*)
  *(.rel.sbss .rel.sbss.* .rel.gnu.linkonce.sb.*)
  *(.rel.sdata2 .rel.sdata2.* .rel.gnu.linkonce.s2.*)
  *(.rel.sbss2 .rel.sbss2.* .rel.gnu.linkonce.sb2.*)
  *(.rel.bss .rel.bss.* .rel.gnu.linkonce.b.*)
- .rel.bss       0x08048d64        0x8 D:/QNX650/target/qnx6/x86/lib/crt1.o
+ .rel.bss       0x080495c8        0x8 D:/QNX650/target/qnx6/x86/lib/crt1.o
 
 .rela.dyn
  *(.rela.init)
@@ -121,138 +146,193 @@ LOAD D:/QNX650/target/qnx6/x86/lib/crtn.o
  *(.rela.sbss2 .rela.sbss2.* .rela.gnu.linkonce.sb2.*)
  *(.rela.bss .rela.bss.* .rela.gnu.linkonce.b.*)
 
-.rel.plt        0x08048d6c      0x160
+.rel.plt        0x080495d0      0x1f0
  *(.rel.plt)
- .rel.plt       0x08048d6c      0x160 D:/QNX650/target/qnx6/x86/lib/crt1.o
+ .rel.plt       0x080495d0      0x1f0 D:/QNX650/target/qnx6/x86/lib/crt1.o
 
 .rela.plt
  *(.rela.plt)
 
-.init           0x08048ecc        0xd
+.init           0x080497c0        0xd
  *(.init)
- .init          0x08048ecc        0x0 D:/QNX650/target/qnx6/x86/lib/crti.o
-                0x08048ecc                _init
- .init          0x08048ecc        0x5 D:/QNX650/host/win32/x86/usr/lib/gcc/i486-pc-nto-qnx6.5.0/4.4.2/crtbegin.o
- .init          0x08048ed1        0x5 D:/QNX650/host/win32/x86/usr/lib/gcc/i486-pc-nto-qnx6.5.0/4.4.2/crtend.o
- .init          0x08048ed6        0x3 D:/QNX650/target/qnx6/x86/lib/crtn.o
+ .init          0x080497c0        0x0 D:/QNX650/target/qnx6/x86/lib/crti.o
+                0x080497c0                _init
+ .init          0x080497c0        0x5 D:/QNX650/host/win32/x86/usr/lib/gcc/i486-pc-nto-qnx6.5.0/4.4.2/crtbegin.o
+ .init          0x080497c5        0x5 D:/QNX650/host/win32/x86/usr/lib/gcc/i486-pc-nto-qnx6.5.0/4.4.2/crtend.o
+ .init          0x080497ca        0x3 D:/QNX650/target/qnx6/x86/lib/crtn.o
 
-.plt            0x08048edc      0x2d0
+.plt            0x080497d0      0x3f0
  *(.plt)
- .plt           0x08048edc      0x2d0 D:/QNX650/target/qnx6/x86/lib/crt1.o
-                0x08048eec                waitpid
-                0x08048efc                ioctl
-                0x08048f0c                pthread_cond_signal
-                0x08048f1c                printf
-                0x08048f2c                _init_array
-                0x08048f3c                pthread_create
-                0x08048f4c                pthread_exit
-                0x08048f5c                usleep
-                0x08048f6c                getpid
-                0x08048f7c                _preinit_array
-                0x08048f8c                fscanf
-                0x08048f9c                perror
-                0x08048fac                puts
-                0x08048fbc                __cxa_finalize
-                0x08048fcc                sem_destroy
-                0x08048fdc                sem_wait
-                0x08048fec                sem_post
-                0x08048ffc                select
-                0x0804900c                write
-                0x0804901c                fprintf
-                0x0804902c                ctime
-                0x0804904c                __get_errno_ptr
-                0x0804905c                sem_init
-                0x0804906c                read
-                0x0804907c                pthread_cond_init
-                0x0804908c                fork
-                0x0804909c                _init_libc
-                0x080490ac                fopen
-                0x080490bc                memset
-                0x080490cc                fclose
-                0x080490dc                _fini_array
-                0x080490ec                pthread_mutex_unlock
-                0x080490fc                atexit
-                0x0804910c                pthread_mutex_destroy
-                0x0804911c                pthread_mutex_lock
-                0x0804912c                pthread_cond_wait
-                0x0804913c                exit
-                0x0804914c                pthread_cond_destroy
-                0x0804915c                pthread_mutex_init
-                0x0804916c                open
-                0x0804917c                pthread_join
-                0x0804919c                close
+ .plt           0x080497d0      0x3f0 D:/QNX650/target/qnx6/x86/lib/crt1.o
+                0x080497e0                sem_init
+                0x08049800                sqrt
+                0x08049810                open
+                0x08049820                system
+                0x08049830                usleep
+                0x08049840                sleep
+                0x08049850                pthread_mutex_init
+                0x08049860                __cxa_finalize
+                0x08049870                _init_array
+                0x08049880                __get_errno_ptr
+                0x08049890                ioctl
+                0x080498a0                pthread_mutex_lock
+                0x080498b0                ctime
+                0x080498c0                sqrtf
+                0x080498d0                read
+                0x080498e0                atexit
+                0x080498f0                select
+                0x08049900                cfsetispeed
+                0x08049910                asin
+                0x08049920                sem_destroy
+                0x08049930                getpid
+                0x08049940                pthread_mutex_destroy
+                0x08049950                fclose
+                0x08049960                fopen
+                0x08049970                cfsetospeed
+                0x08049980                pthread_create
+                0x08049990                write
+                0x080499a0                _init_libc
+                0x080499b0                pthread_cond_signal
+                0x080499c0                close
+                0x080499d0                fputc
+                0x080499e0                mkfifo
+                0x080499f0                sigaction
+                0x08049a00                atan
+                0x08049a10                tcsetattr
+                0x08049a20                sigaddset
+                0x08049a30                pthread_cond_init
+                0x08049a40                tcgetattr
+                0x08049a50                memset
+                0x08049a60                _Sin
+                0x08049a70                perror
+                0x08049a80                tcflush
+                0x08049a90                fprintf
+                0x08049aa0                sigemptyset
+                0x08049ab0                acos
+                0x08049ac0                _fini_array
+                0x08049ad0                pthread_exit
+                0x08049ae0                _preinit_array
+                0x08049af0                exit
+                0x08049b00                fork
+                0x08049b10                pthread_mutex_unlock
+                0x08049b20                sem_post
+                0x08049b30                pthread_cond_destroy
+                0x08049b40                waitpid
+                0x08049b50                printf
+                0x08049b60                pthread_cond_wait
+                0x08049b70                puts
+                0x08049b80                fscanf
+                0x08049ba0                sem_wait
+                0x08049bb0                pthread_join
 
-.text           0x080491b0     0x27d0
-                0x080491b0                _btext = .
+.text           0x08049bc0     0x4a10
+                0x08049bc0                _btext = .
  *(.text .stub .text.* .gnu.linkonce.t.*)
- .text          0x080491b0       0x91 D:/QNX650/target/qnx6/x86/lib/crt1.o
-                0x080491b8                _start
- *fill*         0x08049241        0x3 9090
- .text          0x08049244        0x0 D:/QNX650/target/qnx6/x86/lib/crti.o
- *fill*         0x08049244        0xc 9090
- .text          0x08049250      0x10e D:/QNX650/host/win32/x86/usr/lib/gcc/i486-pc-nto-qnx6.5.0/4.4.2/crtbegin.o
- *fill*         0x0804935e        0x2 9090
- .text          0x08049360      0x1b8 CanConfigure.o
-                0x08049404                set_acccode
-                0x08049360                set_accmask
-                0x080494a2                set_bitrate
- .text          0x08049518      0x885 CanReciveSend.o
-                0x08049d6f                can_end
-                0x08049bd5                can_init
-                0x0804989c                can_recive
-                0x08049518                can_send
- *fill*         0x08049d9d        0x3 9090
- .text          0x08049da0      0xc21 GaitData.o
-                0x0804a65a                FedDataSave
-                0x0804a58a                GaitDataLtransform
-                0x08049da0                GaitDataLoad
- *fill*         0x0804a9c1        0x3 9090
- .text          0x0804a9c4      0x418 HydraQuad.o
-                0x0804a9c4                main
- .text          0x0804addc       0x77 JointControler.o
-                0x0804addc                PID_Controler
- *fill*         0x0804ae53        0x1 9090
- .text          0x0804ae54       0xf3 JointDataFile.o
-                0x0804af12                fed_file_close
-                0x0804ae54                fed_file_open
- *fill*         0x0804af47        0x1 9090
- .text          0x0804af48      0x8ad SystemInit.o
-                0x0804b795                task_end
-                0x0804b057                can_send_pthread
-                0x0804b157                can_recive_pthread
-                0x0804b760                resource_end
-                0x0804b1a8                feddata_manage_pthread
-                0x0804af48                gait_data_pthread
-                0x0804b3e9                calibrate_ad_pthread
-                0x0804b6c1                resource_init
-                0x0804b581                task_init
- *fill*         0x0804b7f5        0x3 9090
- .text          0x0804b7f8      0x140 ad_motion.o
-                0x0804b7f8                ad_limit
- *fill*         0x0804b938        0x8 9090
- .text          0x0804b940       0x40 D:/QNX650/host/win32/x86/usr/lib/gcc/i486-pc-nto-qnx6.5.0/4.4.2/crtend.o
- .text          0x0804b980        0x0 D:/QNX650/target/qnx6/x86/lib/crtn.o
+ .text          0x08049bc0       0x91 D:/QNX650/target/qnx6/x86/lib/crt1.o
+                0x08049bc8                _start
+ *fill*         0x08049c51        0x3 9090
+ .text          0x08049c54        0x0 D:/QNX650/target/qnx6/x86/lib/crti.o
+ *fill*         0x08049c54        0xc 9090
+ .text          0x08049c60      0x10e D:/QNX650/host/win32/x86/usr/lib/gcc/i486-pc-nto-qnx6.5.0/4.4.2/crtbegin.o
+ *fill*         0x08049d6e        0x2 9090
+ .text          0x08049d70      0x1b8 CanConfigure.o
+                0x08049eb2                set_bitrate
+                0x08049e14                set_acccode
+                0x08049d70                set_accmask
+ .text          0x08049f28      0x7f0 CanReciveSend.o
+                0x0804a6f8                can_end
+                0x0804a563                can_init
+                0x08049f28                can_send
+                0x0804a23d                can_recive
+ .text          0x0804a718      0x706 ForceAcq.o
+                0x0804aab9                force_feddata_manage_pthread
+                0x0804ab8c                force_task_init
+                0x0804ade8                sig_handler2
+                0x0804ac8d                force_resource_init
+                0x0804a718                force_get_data_pthread
+                0x0804ad96                force_task_end
+                0x0804aa74                force_can_recive_pthread
+                0x0804ad67                force_resource_end
+                0x0804a95a                force_can_send_pthread
+ *fill*         0x0804ae1e        0x2 9090
+ .text          0x0804ae20      0xa0c GaitData.o
+                0x0804b62a                GaitDataLtransform
+                0x0804ae20                GaitDataLoad
+                0x0804b6fa                FedDataSave
+ .text          0x0804b82c      0xbd5 HydraQuad.o
+                0x0804b82c                main
+ *fill*         0x0804c401        0x3 9090
+ .text          0x0804c404      0x35b IMUAcq.o
+                0x0804c683                imu_feddata_manage_pthread
+                0x0804c4e5                imu_send_data_pthread
+                0x0804c729                sig_handler3
+                0x0804c404                imu_get_data_pthread
+ *fill*         0x0804c75f        0x1 9090
+ .text          0x0804c760      0x13b JointControler.o
+                0x0804c760                PID_Controler
+ *fill*         0x0804c89b        0x1 9090
+ .text          0x0804c89c       0xf3 JointDataFile.o
+                0x0804c89c                fed_file_open
+                0x0804c95a                fed_file_close
+ *fill*         0x0804c98f        0x1 9090
+ .text          0x0804c990      0x816 MotionCurb.o
+                0x0804d110                task_end
+                0x0804cdc2                feddata_manage_pthread
+                0x0804d170                sig_handler1
+                0x0804ceb7                task_init
+                0x0804cd7d                can_recive_pthread
+                0x0804ce71                calibrate_ad_pthread
+                0x0804cff7                resource_init
+                0x0804c990                gait_data_pthread
+                0x0804cc6e                can_send_pthread
+                0x0804d0db                resource_end
+ *fill*         0x0804d1a6        0x2 9090
+ .text          0x0804d1a8     0x108a MotionPlanning.o
+                0x0804d1a8                motion_planning
+                0x0804e06c                drive_space
+                0x0804e174                foot_initial
+                0x0804d732                ikinematic
+                0x0804d625                traj_produce
+                0x0804d689                trajectory_planning
+                0x0804dee3                cylinder_elongation
+ *fill*         0x0804e232        0x2 9090
+ .text          0x0804e234       0x7e ad_motion.o
+                0x0804e234                ad_limit
+ *fill*         0x0804e2b2        0x2 9090
+ .text          0x0804e2b4      0x2cd rs485.o
+                0x0804e431                getimudata
+                0x0804e2b4                rs485init
+ *fill*         0x0804e581        0xf 9090
+ .text          0x0804e590       0x40 D:/QNX650/host/win32/x86/usr/lib/gcc/i486-pc-nto-qnx6.5.0/4.4.2/crtend.o
+ .text          0x0804e5d0        0x0 D:/QNX650/target/qnx6/x86/lib/crtn.o
  *(.gnu.warning)
 
-.fini           0x0804b980        0x8
+.fini           0x0804e5d0        0x8
  *(.fini)
- .fini          0x0804b980        0x0 D:/QNX650/target/qnx6/x86/lib/crti.o
-                0x0804b980                _fini
- .fini          0x0804b980        0x5 D:/QNX650/host/win32/x86/usr/lib/gcc/i486-pc-nto-qnx6.5.0/4.4.2/crtbegin.o
- .fini          0x0804b985        0x3 D:/QNX650/target/qnx6/x86/lib/crtn.o
-                0x0804b988                PROVIDE (__etext, .)
-                0x0804b988                PROVIDE (_etext, .)
-                0x0804b988                PROVIDE (etext, .)
+ .fini          0x0804e5d0        0x0 D:/QNX650/target/qnx6/x86/lib/crti.o
+                0x0804e5d0                _fini
+ .fini          0x0804e5d0        0x5 D:/QNX650/host/win32/x86/usr/lib/gcc/i486-pc-nto-qnx6.5.0/4.4.2/crtbegin.o
+ .fini          0x0804e5d5        0x3 D:/QNX650/target/qnx6/x86/lib/crtn.o
+                0x0804e5d8                PROVIDE (__etext, .)
+                0x0804e5d8                PROVIDE (_etext, .)
+                0x0804e5d8                PROVIDE (etext, .)
 
-.rodata         0x0804b988      0x49c
+.rodata         0x0804e5d8      0xa7c
  *(.rodata .rodata.* .gnu.linkonce.r.*)
- .rodata        0x0804b988       0xb2 CanReciveSend.o
- *fill*         0x0804ba3a        0x6 00
- .rodata        0x0804ba40      0x148 GaitData.o
- .rodata        0x0804bb88       0xd6 HydraQuad.o
- *fill*         0x0804bc5e        0x2 00
- .rodata        0x0804bc60       0x88 JointDataFile.o
- .rodata        0x0804bce8      0x13c SystemInit.o
+ .rodata        0x0804e5d8       0xac CanReciveSend.o
+ .rodata        0x0804e684      0x1b2 ForceAcq.o
+ *fill*         0x0804e836        0x2 00
+ .rodata        0x0804e838       0xd0 GaitData.o
+ .rodata        0x0804e908      0x282 HydraQuad.o
+ *fill*         0x0804eb8a        0x2 00
+ .rodata        0x0804eb8c       0xd6 IMUAcq.o
+ *fill*         0x0804ec62        0x2 00
+ .rodata        0x0804ec64       0x88 JointDataFile.o
+ .rodata        0x0804ecec      0x18b MotionCurb.o
+ *fill*         0x0804ee77        0x1 00
+ .rodata        0x0804ee78      0x118 MotionPlanning.o
+ .rodata        0x0804ef90       0x30 ad_motion.o
+ .rodata        0x0804efc0       0x94 rs485.o
 
 .rodata1
  *(.rodata1)
@@ -266,14 +346,14 @@ LOAD D:/QNX650/target/qnx6/x86/lib/crtn.o
 .eh_frame_hdr
  *(.eh_frame_hdr)
 
-.eh_frame       0x0804be24        0x4
+.eh_frame       0x0804f054        0x4
  *(.eh_frame)
- .eh_frame      0x0804be24        0x0 D:/QNX650/host/win32/x86/usr/lib/gcc/i486-pc-nto-qnx6.5.0/4.4.2/crtbegin.o
- .eh_frame      0x0804be24        0x4 D:/QNX650/host/win32/x86/usr/lib/gcc/i486-pc-nto-qnx6.5.0/4.4.2/crtend.o
+ .eh_frame      0x0804f054        0x0 D:/QNX650/host/win32/x86/usr/lib/gcc/i486-pc-nto-qnx6.5.0/4.4.2/crtbegin.o
+ .eh_frame      0x0804f054        0x4 D:/QNX650/host/win32/x86/usr/lib/gcc/i486-pc-nto-qnx6.5.0/4.4.2/crtend.o
 
 .gcc_except_table
  *(.gcc_except_table .gcc_except_table.*)
-                0x0804ce28                . = (ALIGN (0x1000) + (. & 0xfff))
+                0x08050058                . = (ALIGN (0x1000) + (. & 0xfff))
 
 .eh_frame
  *(.eh_frame)
@@ -288,136 +368,168 @@ LOAD D:/QNX650/target/qnx6/x86/lib/crtn.o
  *(.tbss .tbss.* .gnu.linkonce.tb.*)
  *(.tcommon)
 
-.preinit_array  0x0804ce28        0x0
-                0x0804ce28                PROVIDE (__preinit_array_start, .)
+.preinit_array  0x08050058        0x0
+                0x08050058                PROVIDE (__preinit_array_start, .)
  *(.preinit_array)
-                0x0804ce28                PROVIDE (__preinit_array_end, .)
+                0x08050058                PROVIDE (__preinit_array_end, .)
 
-.init_array     0x0804ce28        0x0
-                0x0804ce28                PROVIDE (__init_array_start, .)
+.init_array     0x08050058        0x0
+                0x08050058                PROVIDE (__init_array_start, .)
  *(SORT(.init_array.*))
  *(.init_array)
-                0x0804ce28                PROVIDE (__init_array_end, .)
+                0x08050058                PROVIDE (__init_array_end, .)
 
-.fini_array     0x0804ce28        0x0
-                0x0804ce28                PROVIDE (__fini_array_start, .)
+.fini_array     0x08050058        0x0
+                0x08050058                PROVIDE (__fini_array_start, .)
  *(.fini_array)
  *(SORT(.fini_array.*))
-                0x0804ce28                PROVIDE (__fini_array_end, .)
+                0x08050058                PROVIDE (__fini_array_end, .)
 
-.ctors          0x0804ce28        0x8
+.ctors          0x08050058        0x8
  *crtbegin.o(.ctors)
- .ctors         0x0804ce28        0x4 D:/QNX650/host/win32/x86/usr/lib/gcc/i486-pc-nto-qnx6.5.0/4.4.2/crtbegin.o
+ .ctors         0x08050058        0x4 D:/QNX650/host/win32/x86/usr/lib/gcc/i486-pc-nto-qnx6.5.0/4.4.2/crtbegin.o
  *crtbegin?.o(.ctors)
  *(EXCLUDE_FILE(*crtend?.o *crtend.o) .ctors)
  *(SORT(.ctors.*))
  *(.ctors)
- .ctors         0x0804ce2c        0x4 D:/QNX650/host/win32/x86/usr/lib/gcc/i486-pc-nto-qnx6.5.0/4.4.2/crtend.o
+ .ctors         0x0805005c        0x4 D:/QNX650/host/win32/x86/usr/lib/gcc/i486-pc-nto-qnx6.5.0/4.4.2/crtend.o
 
-.dtors          0x0804ce30        0x8
+.dtors          0x08050060        0x8
  *crtbegin.o(.dtors)
- .dtors         0x0804ce30        0x4 D:/QNX650/host/win32/x86/usr/lib/gcc/i486-pc-nto-qnx6.5.0/4.4.2/crtbegin.o
+ .dtors         0x08050060        0x4 D:/QNX650/host/win32/x86/usr/lib/gcc/i486-pc-nto-qnx6.5.0/4.4.2/crtbegin.o
  *crtbegin?.o(.dtors)
  *(EXCLUDE_FILE(*crtend?.o *crtend.o) .dtors)
  *(SORT(.dtors.*))
  *(.dtors)
- .dtors         0x0804ce34        0x4 D:/QNX650/host/win32/x86/usr/lib/gcc/i486-pc-nto-qnx6.5.0/4.4.2/crtend.o
-                0x0804ce34                __DTOR_END__
+ .dtors         0x08050064        0x4 D:/QNX650/host/win32/x86/usr/lib/gcc/i486-pc-nto-qnx6.5.0/4.4.2/crtend.o
+                0x08050064                __DTOR_END__
 
-.jcr            0x0804ce38        0x4
+.jcr            0x08050068        0x4
  *(.jcr)
- .jcr           0x0804ce38        0x0 D:/QNX650/host/win32/x86/usr/lib/gcc/i486-pc-nto-qnx6.5.0/4.4.2/crtbegin.o
- .jcr           0x0804ce38        0x4 D:/QNX650/host/win32/x86/usr/lib/gcc/i486-pc-nto-qnx6.5.0/4.4.2/crtend.o
+ .jcr           0x08050068        0x0 D:/QNX650/host/win32/x86/usr/lib/gcc/i486-pc-nto-qnx6.5.0/4.4.2/crtbegin.o
+ .jcr           0x08050068        0x4 D:/QNX650/host/win32/x86/usr/lib/gcc/i486-pc-nto-qnx6.5.0/4.4.2/crtend.o
 
 .data.rel.ro
  *(.data.rel.ro.local* .gnu.linkonce.d.rel.ro.local.*)
  *(.data.rel.ro* .gnu.linkonce.d.rel.ro.*)
 
-.dynamic        0x0804ce3c       0xb0
+.dynamic        0x0805006c       0xc0
  *(.dynamic)
- .dynamic       0x0804ce3c       0xb0 D:/QNX650/target/qnx6/x86/lib/crt1.o
-                0x0804ce3c                _DYNAMIC
+ .dynamic       0x0805006c       0xc0 D:/QNX650/target/qnx6/x86/lib/crt1.o
+                0x0805006c                _DYNAMIC
 
-.data           0x0804ceec        0x4
+.data           0x08050140       0x94
  *(.data .data.* .gnu.linkonce.d.*)
- .data          0x0804ceec        0x0 D:/QNX650/target/qnx6/x86/lib/crt1.o
- .data          0x0804ceec        0x0 D:/QNX650/target/qnx6/x86/lib/crti.o
- .data          0x0804ceec        0x0 D:/QNX650/host/win32/x86/usr/lib/gcc/i486-pc-nto-qnx6.5.0/4.4.2/crtbegin.o
- .data.rel      0x0804ceec        0x4 D:/QNX650/host/win32/x86/usr/lib/gcc/i486-pc-nto-qnx6.5.0/4.4.2/crtbegin.o
-                0x0804ceec                __dso_handle
- .data          0x0804cef0        0x0 CanConfigure.o
- .data          0x0804cef0        0x0 CanReciveSend.o
- .data          0x0804cef0        0x0 GaitData.o
- .data          0x0804cef0        0x0 HydraQuad.o
- .data          0x0804cef0        0x0 JointControler.o
- .data          0x0804cef0        0x0 JointDataFile.o
- .data          0x0804cef0        0x0 SystemInit.o
- .data          0x0804cef0        0x0 ad_motion.o
- .data          0x0804cef0        0x0 D:/QNX650/host/win32/x86/usr/lib/gcc/i486-pc-nto-qnx6.5.0/4.4.2/crtend.o
- .data          0x0804cef0        0x0 D:/QNX650/target/qnx6/x86/lib/crtn.o
+ .data          0x08050140        0x0 D:/QNX650/target/qnx6/x86/lib/crt1.o
+ .data          0x08050140        0x0 D:/QNX650/target/qnx6/x86/lib/crti.o
+ .data          0x08050140        0x0 D:/QNX650/host/win32/x86/usr/lib/gcc/i486-pc-nto-qnx6.5.0/4.4.2/crtbegin.o
+ .data.rel      0x08050140        0x4 D:/QNX650/host/win32/x86/usr/lib/gcc/i486-pc-nto-qnx6.5.0/4.4.2/crtbegin.o
+                0x08050140                __dso_handle
+ .data          0x08050144        0x0 CanConfigure.o
+ .data          0x08050144        0x0 CanReciveSend.o
+ .data          0x08050144        0x0 ForceAcq.o
+ .data          0x08050144        0x0 GaitData.o
+ .data          0x08050144       0x46 HydraQuad.o
+                0x08050172                forcepath
+                0x0805015c                imupath
+                0x08050144                jointpath
+ *fill*         0x0805018a        0x2 00
+ .data          0x0805018c        0x0 IMUAcq.o
+ *fill*         0x0805018c       0x14 00
+ .data          0x080501a0       0x30 JointControler.o
+ .data          0x080501d0        0x0 JointDataFile.o
+ .data          0x080501d0        0x4 MotionCurb.o
+ .data          0x080501d4        0x0 MotionPlanning.o
+ .data          0x080501d4        0x0 ad_motion.o
+ .data          0x080501d4        0x0 rs485.o
+ .data          0x080501d4        0x0 D:/QNX650/host/win32/x86/usr/lib/gcc/i486-pc-nto-qnx6.5.0/4.4.2/crtend.o
+ .data          0x080501d4        0x0 D:/QNX650/target/qnx6/x86/lib/crtn.o
 
 .data1
  *(.data1)
 
-.got            0x0804cef0       0xcc
+.got            0x080501d4      0x114
  *(.got.plt)
- .got.plt       0x0804cef0       0xbc D:/QNX650/target/qnx6/x86/lib/crt1.o
-                0x0804cef0                _GLOBAL_OFFSET_TABLE_
+ .got.plt       0x080501d4      0x104 D:/QNX650/target/qnx6/x86/lib/crt1.o
+                0x080501d4                _GLOBAL_OFFSET_TABLE_
  *(.got)
- .got           0x0804cfac       0x10 D:/QNX650/target/qnx6/x86/lib/crt1.o
+ .got           0x080502d8       0x10 D:/QNX650/target/qnx6/x86/lib/crt1.o
 
 .sdata
  *(.sdata .sdata.* .gnu.linkonce.s.*)
-                0x0804cfbc                _edata = .
-                0x0804cfbc                PROVIDE (edata, .)
-                0x0804cfbc                __bss_start = .
+                0x080502e8                _edata = .
+                0x080502e8                PROVIDE (edata, .)
+                0x080502e8                __bss_start = .
 
 .sbss
  *(.dynsbss)
  *(.sbss .sbss.* .gnu.linkonce.sb.*)
  *(.scommon)
 
-.bss            0x0804cfc0     0x1484
+.bss            0x08050300     0x16a0
  *(.dynbss)
- .dynbss        0x0804cfc0        0x4 D:/QNX650/target/qnx6/x86/lib/crt1.o
-                0x0804cfc0                errno
+ .dynbss        0x08050300        0x4 D:/QNX650/target/qnx6/x86/lib/crt1.o
+                0x08050300                errno
  *(.bss .bss.* .gnu.linkonce.b.*)
- .bss           0x0804cfc4        0x0 D:/QNX650/target/qnx6/x86/lib/crt1.o
- .bss           0x0804cfc4        0x0 D:/QNX650/target/qnx6/x86/lib/crti.o
- .bss           0x0804cfc4       0x20 D:/QNX650/host/win32/x86/usr/lib/gcc/i486-pc-nto-qnx6.5.0/4.4.2/crtbegin.o
- .bss           0x0804cfe4        0x0 CanConfigure.o
- .bss           0x0804cfe4        0x0 CanReciveSend.o
- .bss           0x0804cfe4        0x0 GaitData.o
- .bss           0x0804cfe4        0x0 HydraQuad.o
- .bss           0x0804cfe4        0x0 JointControler.o
- .bss           0x0804cfe4        0x0 JointDataFile.o
- .bss           0x0804cfe4        0x0 SystemInit.o
- .bss           0x0804cfe4        0x0 ad_motion.o
- .bss           0x0804cfe4        0x0 D:/QNX650/host/win32/x86/usr/lib/gcc/i486-pc-nto-qnx6.5.0/4.4.2/crtend.o
- .bss           0x0804cfe4        0x0 D:/QNX650/target/qnx6/x86/lib/crtn.o
+ .bss           0x08050304        0x0 D:/QNX650/target/qnx6/x86/lib/crt1.o
+ .bss           0x08050304        0x0 D:/QNX650/target/qnx6/x86/lib/crti.o
+ .bss           0x08050304       0x20 D:/QNX650/host/win32/x86/usr/lib/gcc/i486-pc-nto-qnx6.5.0/4.4.2/crtbegin.o
+ .bss           0x08050324        0x0 CanConfigure.o
+ .bss           0x08050324        0x0 CanReciveSend.o
+ .bss           0x08050324        0x4 ForceAcq.o
+ .bss           0x08050328        0x0 GaitData.o
+ .bss           0x08050328        0x0 HydraQuad.o
+ .bss           0x08050328        0x0 IMUAcq.o
+ *fill*         0x08050328       0x18 00
+ .bss           0x08050340       0x50 JointControler.o
+ .bss           0x08050390        0x0 JointDataFile.o
+ .bss           0x08050390        0x0 MotionCurb.o
+ .bss           0x08050390        0x0 MotionPlanning.o
+ .bss           0x08050390        0x0 ad_motion.o
+ .bss           0x08050390        0x0 rs485.o
+ .bss           0x08050390        0x0 D:/QNX650/host/win32/x86/usr/lib/gcc/i486-pc-nto-qnx6.5.0/4.4.2/crtend.o
+ .bss           0x08050390        0x0 D:/QNX650/target/qnx6/x86/lib/crtn.o
  *(COMMON)
- *fill*         0x0804cfe4       0x1c 00
- COMMON         0x0804d000      0x130 GaitData.o
-                0x0804d000                UPLIMIT
-                0x0804d0a0                DOWNLIMIT
- *fill*         0x0804d130       0x10 00
- COMMON         0x0804d140     0x1304 HydraQuad.o
-                0x0804d140                cond_send
-                0x0804d148                fp
-                0x0804d160                hopedata
-                0x0804e420                mutex_cond_send
-                0x0804e428                motion_curb_pid
-                0x0804e42c                CAN_RD_thread
-                0x0804e430                CAL_AD_thread
-                0x0804e434                AD_calibrate_pid
-                0x0804e438                FD_MANA_thread
-                0x0804e43c                GAIT_DATA_thread
-                0x0804e440                CAN_WR_thread
-                0x0804e444                . = ALIGN ((. != 0x0)?0x4:0x1)
-                0x0804e444                . = ALIGN (0x4)
-                0x0804e444                . = ALIGN (0x4)
-                0x0804e444                _end = .
-                0x0804e444                PROVIDE (end, .)
+ *fill*         0x08050390       0x10 00
+ COMMON         0x080503a0      0x154 ForceAcq.o
+                0x080503a0                UPLIMIT
+                0x08050430                cond_send
+                0x08050438                FORCE_GET_thread
+                0x0805043c                FORCE_RE_thread
+                0x08050440                FORCE_SD_thread
+                0x08050444                mutex_cond_send
+                0x08050460                DOWNLIMIT
+                0x080504f0                FORCE_FD_thread
+ *fill*         0x080504f4        0xc 00
+ COMMON         0x08050500      0x1b8 HydraQuad.o
+                0x08050500                force_buffer
+                0x08050580                joint_buffer
+                0x08050600                imu_buffer
+                0x08050680                motion_curb_pid
+                0x08050684                TP_thread
+                0x08050688                GAIT_DATA_thread
+                0x0805068c                motion_planning_pid
+                0x08050690                MP_thread
+                0x08050694                CAN_WR_thread
+                0x08050698                IMU_acq_thread
+                0x0805069c                CAL_AD_thread
+                0x080506a0                force_acquisition_pid
+                0x080506a4                FD_MANA_thread
+                0x080506a8                IMU_FD_thread
+                0x080506ac                IMU_snd_thread
+                0x080506b0                imu_acquisition_pid
+                0x080506b4                CAN_RD_thread
+ COMMON         0x080506b8        0x4 IMUAcq.o
+                0x080506b8                signal_count3
+ *fill*         0x080506bc        0x4 00
+ COMMON         0x080506c0     0x12e0 MotionCurb.o
+                0x080506c0                fp
+                0x080506e0                hopedata
+                0x080519a0                . = ALIGN ((. != 0x0)?0x4:0x1)
+                0x080519a0                . = ALIGN (0x4)
+                0x080519a0                . = ALIGN (0x4)
+                0x080519a0                _end = .
+                0x080519a0                PROVIDE (end, .)
 
 .stab
  *(.stab)
@@ -437,18 +549,22 @@ LOAD D:/QNX650/target/qnx6/x86/lib/crtn.o
 .stab.indexstr
  *(.stab.indexstr)
 
-.comment        0x00000000       0xb4
+.comment        0x00000000       0xfc
  *(.comment)
  .comment       0x00000000       0x12 D:/QNX650/host/win32/x86/usr/lib/gcc/i486-pc-nto-qnx6.5.0/4.4.2/crtbegin.o
  .comment       0x00000012       0x12 CanConfigure.o
  .comment       0x00000024       0x12 CanReciveSend.o
- .comment       0x00000036       0x12 GaitData.o
- .comment       0x00000048       0x12 HydraQuad.o
- .comment       0x0000005a       0x12 JointControler.o
- .comment       0x0000006c       0x12 JointDataFile.o
- .comment       0x0000007e       0x12 SystemInit.o
- .comment       0x00000090       0x12 ad_motion.o
- .comment       0x000000a2       0x12 D:/QNX650/host/win32/x86/usr/lib/gcc/i486-pc-nto-qnx6.5.0/4.4.2/crtend.o
+ .comment       0x00000036       0x12 ForceAcq.o
+ .comment       0x00000048       0x12 GaitData.o
+ .comment       0x0000005a       0x12 HydraQuad.o
+ .comment       0x0000006c       0x12 IMUAcq.o
+ .comment       0x0000007e       0x12 JointControler.o
+ .comment       0x00000090       0x12 JointDataFile.o
+ .comment       0x000000a2       0x12 MotionCurb.o
+ .comment       0x000000b4       0x12 MotionPlanning.o
+ .comment       0x000000c6       0x12 ad_motion.o
+ .comment       0x000000d8       0x12 rs485.o
+ .comment       0x000000ea       0x12 D:/QNX650/host/win32/x86/usr/lib/gcc/i486-pc-nto-qnx6.5.0/4.4.2/crtend.o
 
 .debug
  *(.debug)
@@ -462,118 +578,162 @@ LOAD D:/QNX650/target/qnx6/x86/lib/crtn.o
 .debug_sfnames
  *(.debug_sfnames)
 
-.debug_aranges  0x00000000      0x100
+.debug_aranges  0x00000000      0x180
  *(.debug_aranges)
  .debug_aranges
                 0x00000000       0x20 CanConfigure.o
  .debug_aranges
                 0x00000020       0x20 CanReciveSend.o
  .debug_aranges
-                0x00000040       0x20 GaitData.o
+                0x00000040       0x20 ForceAcq.o
  .debug_aranges
-                0x00000060       0x20 HydraQuad.o
+                0x00000060       0x20 GaitData.o
  .debug_aranges
-                0x00000080       0x20 JointControler.o
+                0x00000080       0x20 HydraQuad.o
  .debug_aranges
-                0x000000a0       0x20 JointDataFile.o
+                0x000000a0       0x20 IMUAcq.o
  .debug_aranges
-                0x000000c0       0x20 SystemInit.o
+                0x000000c0       0x20 JointControler.o
  .debug_aranges
-                0x000000e0       0x20 ad_motion.o
+                0x000000e0       0x20 JointDataFile.o
+ .debug_aranges
+                0x00000100       0x20 MotionCurb.o
+ .debug_aranges
+                0x00000120       0x20 MotionPlanning.o
+ .debug_aranges
+                0x00000140       0x20 ad_motion.o
+ .debug_aranges
+                0x00000160       0x20 rs485.o
 
 .debug_pubnames
-                0x00000000      0x410
+                0x00000000      0x832
  *(.debug_pubnames)
  .debug_pubnames
                 0x00000000       0x42 CanConfigure.o
  .debug_pubnames
                 0x00000042       0x47 CanReciveSend.o
  .debug_pubnames
-                0x00000089       0x64 GaitData.o
+                0x00000089      0x17a ForceAcq.o
  .debug_pubnames
-                0x000000ed       0xf2 HydraQuad.o
+                0x00000203       0x64 GaitData.o
  .debug_pubnames
-                0x000001df       0x24 JointControler.o
+                0x00000267      0x211 HydraQuad.o
  .debug_pubnames
-                0x00000203       0x37 JointDataFile.o
+                0x00000478       0xbf IMUAcq.o
  .debug_pubnames
-                0x0000023a      0x19d SystemInit.o
+                0x00000537       0x24 JointControler.o
  .debug_pubnames
-                0x000003d7       0x39 ad_motion.o
+                0x0000055b       0x37 JointDataFile.o
+ .debug_pubnames
+                0x00000592      0x185 MotionCurb.o
+ .debug_pubnames
+                0x00000717       0xb3 MotionPlanning.o
+ .debug_pubnames
+                0x000007ca       0x39 ad_motion.o
+ .debug_pubnames
+                0x00000803       0x2f rs485.o
 
-.debug_info     0x00000000     0x1db4
+.debug_info     0x00000000     0x3f18
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000      0x1f8 CanConfigure.o
- .debug_info    0x000001f8      0x3ef CanReciveSend.o
- .debug_info    0x000005e7      0x428 GaitData.o
- .debug_info    0x00000a0f      0x64b HydraQuad.o
- .debug_info    0x0000105a       0xe5 JointControler.o
- .debug_info    0x0000113f      0x300 JointDataFile.o
- .debug_info    0x0000143f      0x884 SystemInit.o
- .debug_info    0x00001cc3       0xf1 ad_motion.o
+ .debug_info    0x000001f8      0x3fc CanReciveSend.o
+ .debug_info    0x000005f4      0xa68 ForceAcq.o
+ .debug_info    0x0000105c      0x444 GaitData.o
+ .debug_info    0x000014a0      0x8b2 HydraQuad.o
+ .debug_info    0x00001d52      0x778 IMUAcq.o
+ .debug_info    0x000024ca      0x163 JointControler.o
+ .debug_info    0x0000262d      0x300 JointDataFile.o
+ .debug_info    0x0000292d      0xb00 MotionCurb.o
+ .debug_info    0x0000342d      0x5c8 MotionPlanning.o
+ .debug_info    0x000039f5      0x2d9 ad_motion.o
+ .debug_info    0x00003cce      0x24a rs485.o
 
-.debug_abbrev   0x00000000      0x7a0
+.debug_abbrev   0x00000000      0xeaf
  *(.debug_abbrev)
  .debug_abbrev  0x00000000       0xcf CanConfigure.o
  .debug_abbrev  0x000000cf       0xf0 CanReciveSend.o
- .debug_abbrev  0x000001bf      0x118 GaitData.o
- .debug_abbrev  0x000002d7      0x150 HydraQuad.o
- .debug_abbrev  0x00000427       0x80 JointControler.o
- .debug_abbrev  0x000004a7      0x115 JointDataFile.o
- .debug_abbrev  0x000005bc      0x150 SystemInit.o
- .debug_abbrev  0x0000070c       0x94 ad_motion.o
+ .debug_abbrev  0x000001bf      0x1e1 ForceAcq.o
+ .debug_abbrev  0x000003a0      0x118 GaitData.o
+ .debug_abbrev  0x000004b8      0x136 HydraQuad.o
+ .debug_abbrev  0x000005ee      0x1d4 IMUAcq.o
+ .debug_abbrev  0x000007c2       0x92 JointControler.o
+ .debug_abbrev  0x00000854      0x115 JointDataFile.o
+ .debug_abbrev  0x00000969      0x1f0 MotionCurb.o
+ .debug_abbrev  0x00000b59      0x17b MotionPlanning.o
+ .debug_abbrev  0x00000cd4       0xf1 ad_motion.o
+ .debug_abbrev  0x00000dc5       0xea rs485.o
 
-.debug_line     0x00000000      0xc4f
+.debug_line     0x00000000     0x14fb
  *(.debug_line)
  .debug_line    0x00000000       0xc8 CanConfigure.o
- .debug_line    0x000000c8      0x1b9 CanReciveSend.o
- .debug_line    0x00000281      0x1f6 GaitData.o
- .debug_line    0x00000477      0x288 HydraQuad.o
- .debug_line    0x000006ff       0x94 JointControler.o
- .debug_line    0x00000793      0x125 JointDataFile.o
- .debug_line    0x000008b8      0x2e0 SystemInit.o
- .debug_line    0x00000b98       0xb7 ad_motion.o
+ .debug_line    0x000000c8      0x1b8 CanReciveSend.o
+ .debug_line    0x00000280      0x2bc ForceAcq.o
+ .debug_line    0x0000053c      0x1c0 GaitData.o
+ .debug_line    0x000006fc      0x36e HydraQuad.o
+ .debug_line    0x00000a6a      0x180 IMUAcq.o
+ .debug_line    0x00000bea       0xab JointControler.o
+ .debug_line    0x00000c95      0x125 JointDataFile.o
+ .debug_line    0x00000dba      0x2d9 MotionCurb.o
+ .debug_line    0x00001093      0x232 MotionPlanning.o
+ .debug_line    0x000012c5      0x104 ad_motion.o
+ .debug_line    0x000013c9      0x132 rs485.o
 
-.debug_frame    0x00000000      0x380
+.debug_frame    0x00000000      0x674
  *(.debug_frame)
  .debug_frame   0x00000000       0x68 CanConfigure.o
  .debug_frame   0x00000068       0x94 CanReciveSend.o
- .debug_frame   0x000000fc       0x7c GaitData.o
- .debug_frame   0x00000178       0x44 HydraQuad.o
- .debug_frame   0x000001bc       0x30 JointControler.o
- .debug_frame   0x000001ec       0x50 JointDataFile.o
- .debug_frame   0x0000023c      0x114 SystemInit.o
- .debug_frame   0x00000350       0x30 ad_motion.o
+ .debug_frame   0x000000fc      0x118 ForceAcq.o
+ .debug_frame   0x00000214       0x7c GaitData.o
+ .debug_frame   0x00000290       0x44 HydraQuad.o
+ .debug_frame   0x000002d4       0x8c IMUAcq.o
+ .debug_frame   0x00000360       0x34 JointControler.o
+ .debug_frame   0x00000394       0x50 JointDataFile.o
+ .debug_frame   0x000003e4      0x134 MotionCurb.o
+ .debug_frame   0x00000518       0xe0 MotionPlanning.o
+ .debug_frame   0x000005f8       0x30 ad_motion.o
+ .debug_frame   0x00000628       0x4c rs485.o
 
-.debug_str      0x00000000      0x852
+.debug_str      0x00000000      0xe7d
  *(.debug_str)
  .debug_str     0x00000000      0x13f CanConfigure.o
                                 0x178 (size before relaxing)
- .debug_str     0x0000013f      0x17f CanReciveSend.o
-                                0x229 (size before relaxing)
- .debug_str     0x000002be      0x18c GaitData.o
-                                0x215 (size before relaxing)
- .debug_str     0x0000044a      0x187 HydraQuad.o
-                                0x372 (size before relaxing)
- .debug_str     0x000005d1       0x86 JointControler.o
-                                0x109 (size before relaxing)
- .debug_str     0x00000657       0x89 JointDataFile.o
+ .debug_str     0x0000013f      0x180 CanReciveSend.o
+                                0x230 (size before relaxing)
+ .debug_str     0x000002bf      0x408 ForceAcq.o
+                                0x575 (size before relaxing)
+ .debug_str     0x000006c7       0xce GaitData.o
+                                0x227 (size before relaxing)
+ .debug_str     0x00000795      0x1f1 HydraQuad.o
+                                0x4cb (size before relaxing)
+ .debug_str     0x00000986       0xb7 IMUAcq.o
+                                0x40d (size before relaxing)
+ .debug_str     0x00000a3d       0x7f JointControler.o
+                                0x132 (size before relaxing)
+ .debug_str     0x00000abc       0x7d JointDataFile.o
                                 0x1ef (size before relaxing)
- .debug_str     0x000006e0      0x10e SystemInit.o
-                                0x3f3 (size before relaxing)
- .debug_str     0x000007ee       0x64 ad_motion.o
-                                0x107 (size before relaxing)
+ .debug_str     0x00000b39       0xb2 MotionCurb.o
+                                0x567 (size before relaxing)
+ .debug_str     0x00000beb      0x144 MotionPlanning.o
+                                0x2a9 (size before relaxing)
+ .debug_str     0x00000d2f       0x64 ad_motion.o
+                                0x1bf (size before relaxing)
+ .debug_str     0x00000d93       0xea rs485.o
+                                0x1ab (size before relaxing)
 
-.debug_loc      0x00000000      0x420
+.debug_loc      0x00000000      0x814
  *(.debug_loc)
  .debug_loc     0x00000000       0x84 CanConfigure.o
  .debug_loc     0x00000084       0xb0 CanReciveSend.o
- .debug_loc     0x00000134       0x84 GaitData.o
- .debug_loc     0x000001b8       0x2c HydraQuad.o
- .debug_loc     0x000001e4       0x2c JointControler.o
- .debug_loc     0x00000210       0x58 JointDataFile.o
- .debug_loc     0x00000268      0x18c SystemInit.o
- .debug_loc     0x000003f4       0x2c ad_motion.o
+ .debug_loc     0x00000134      0x18c ForceAcq.o
+ .debug_loc     0x000002c0       0x84 GaitData.o
+ .debug_loc     0x00000344       0x2c HydraQuad.o
+ .debug_loc     0x00000370       0xb0 IMUAcq.o
+ .debug_loc     0x00000420       0x2c JointControler.o
+ .debug_loc     0x0000044c       0x58 JointDataFile.o
+ .debug_loc     0x000004a4      0x1b8 MotionCurb.o
+ .debug_loc     0x0000065c      0x134 MotionPlanning.o
+ .debug_loc     0x00000790       0x2c ad_motion.o
+ .debug_loc     0x000007bc       0x58 rs485.o
 
 .debug_macinfo
  *(.debug_macinfo)

@@ -2,7 +2,7 @@
  * CanConfigure.c
  *
  *  Created on: 2016-4-8
- *      Author: Administrator
+ *      Author: SunTao
  */
 
 #include "DeviceLibrary/CANDevice/CanConfigure.h"

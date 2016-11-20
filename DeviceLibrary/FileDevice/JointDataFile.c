@@ -12,19 +12,19 @@ int fed_file_open(FILE *fp[],int count){
 		time_t time_of_day;
 		int i;
 
-		if ((fp[0] = fopen(QZFFED, "w")) < 0) {
+		if ((fp[0] = fopen(QYFFED, "w")) < 0) {
 			printf("open QZFED file error\n");
 			exit(1);
 		}
-		if ((fp[1] = fopen(QYFFED, "w")) < 0) {
+		if ((fp[1] = fopen(QZFFED, "w")) < 0) {
 			printf("open QYFED file error\n");
 			exit(1);
 		}
-		if ((fp[2] = fopen(HZFFED, "w")) < 0) {
+		if ((fp[2] = fopen(HYFFED, "w")) < 0) {
 			printf("open HZFED file error\n");
 			exit(1);
 		}
-		if ((fp[3] = fopen(HYFFED, "w")) < 0) {
+		if ((fp[3] = fopen(HZFFED, "w")) < 0) {
 			printf("open HYFED file error\n");
 			exit(1);
 		}
